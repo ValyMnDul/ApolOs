@@ -1,6 +1,19 @@
 org 0x7c00
 bits 16
 
+mov bp, 0x8000
+mov sp, bp
+
+mov bx, 0x1000
+
+mov ah, 0x02
+mov al, 15
+mov ch, 0x00
+mov dh, 0x00
+mov cl, 2
+
+int 0x13
+
 cli             
 
 lgdt [gdt_descriptor]
@@ -31,6 +44,7 @@ init_pm:
 
     call set_cursor
 
+    ;call 00x1000
     jmp $
 
 print:
