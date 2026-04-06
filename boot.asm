@@ -24,11 +24,35 @@ init_pm:
     mov ebp, 0x90000
     mov esp, ebp
 
-    mov ebx, 0xb8000
-    mov byte [ebx], 'A'
-    mov byte [ebx+1], 0x0A
+    mov ebx, TITLE
+    call print
 
     jmp $
+
+print:
+    pusha
+    mov edx, 0xb8000
+
+print_loop:
+    mov al, [ebx]
+    mov ah, 0x0F
+
+    cmp al, 0
+    je print_done
+
+    mov [edx], ax
+    add ebx, 1
+    add edx, 2
+
+    jmp print_loop
+
+print_done:
+    popa
+    ret
+
+
+
+TITLE db "ApolOs", 0
 
 gdt_start:
 
