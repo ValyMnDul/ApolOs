@@ -54,7 +54,6 @@ print_done:
     popa
     ret
 
-
 clear:
     pusha
     mov edx, 0xb8000
@@ -75,7 +74,6 @@ clear_loop:
 clear_done:
     popa
     ret
-
 
 set_cursor:
     pusha
