@@ -1,26 +1,32 @@
-[org 0x7c00]
+org 0x7c00
+bits 16
 
-mov ah, 0x0e
+cli             
 
-mov al, 'H'
-int 0x10
+lgdt [gdt_descriptor]
 
-mov al, 'i'
-int 0x10
+mov eax, cr0
+or eax, 0x1
+mov cr0 , eax
 
-mov al, 0x0a
-int 0x10
+jmp CODE_SEG:init_pm
 
-mov al, 0x0d
-int 0x10
+bits 32
 
-mov al, 'H'
-int 0x10
+init_pm:
+    mov ax, DATA_SEG
+    mov ds, ax
+    mov ss, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
 
-mov al, 'C'
-int 0x10
-
-jmp $
+    mov ebp 0x90000
+    mov esp, ebp
+    
+    
+CODE_SEG equ gdt_code - gdt_start
+DATA_SEG equ gdt_data - gdt_start
 
 times 510-($-$$) db 0
 dw 0xaa55
