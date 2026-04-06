@@ -29,6 +29,8 @@ init_pm:
     mov ebx, TITLE
     call print
 
+    call set_cursor
+
     jmp $
 
 print:
@@ -53,7 +55,6 @@ print_done:
     ret
 
 
-
 clear:
     pusha
     mov edx, 0xb8000
@@ -72,6 +73,31 @@ clear_loop:
     jmp clear_loop
 
 clear_done:
+    popa
+    ret
+
+
+set_cursor:
+    pusha
+
+    mov bx, 6
+
+    mov al, 0x0f
+    mov dx, 0x03d4
+    out dx, al
+
+    mov al, bl
+    mov dx, 0x03D5
+    out dx, al
+
+    mov al, 0x0E
+    mov dx, 0x03D4
+    out dx, al
+
+    mov al, bh
+    mov dx, 0x03D5
+    out dx, al
+
     popa
     ret
 
