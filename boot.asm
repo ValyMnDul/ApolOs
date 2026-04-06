@@ -24,6 +24,8 @@ init_pm:
     mov ebp, 0x90000
     mov esp, ebp
 
+    call clear
+
     mov ebx, TITLE
     call print
 
@@ -51,6 +53,27 @@ print_done:
     ret
 
 
+
+clear:
+    pusha
+    mov edx, 0xb8000
+    mov ecx, 0
+
+clear_loop:
+    cmp ecx, 2000
+    je clear_done
+
+    mov byte [edx], ' '
+    mov byte [edx + 1], 0x0F
+
+    add edx, 2
+    add ecx, 1
+
+    jmp clear_loop
+
+clear_done:
+    popa
+    ret
 
 TITLE db "ApolOs", 0
 
