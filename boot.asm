@@ -44,9 +44,8 @@ init_pm:
 
     call set_cursor
 
-    ;call 00x1000
-    jmp $
-
+    call 0x1000
+    
 print:
     pusha
     mov edx, 0xb8000
