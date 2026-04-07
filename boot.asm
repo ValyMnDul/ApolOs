@@ -1,6 +1,10 @@
 org 0x7c00
 bits 16
 
+xor ax, ax
+mov ds, ax
+mov es, ax
+
 mov bp, 0x8000
 mov sp, bp
 
@@ -45,6 +49,8 @@ init_pm:
     ; call set_cursor
 
     call 0x1000
+
+    jmp $
     
 ; print:
 ;     pusha
