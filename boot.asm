@@ -37,82 +37,82 @@ init_pm:
     mov ebp, 0x90000
     mov esp, ebp
 
-    call clear
+    ; call clear
 
-    mov ebx, TITLE
-    call print
+    ; mov ebx, TITLE
+    ; call print
 
-    call set_cursor
+    ; call set_cursor
 
     call 0x1000
     
-print:
-    pusha
-    mov edx, 0xb8000
+; print:
+;     pusha
+;     mov edx, 0xb8000
 
-print_loop:
-    mov al, [ebx]
-    mov ah, 0x0F
+; print_loop:
+;     mov al, [ebx]
+;     mov ah, 0x0F
 
-    cmp al, 0
-    je print_done
+;     cmp al, 0
+;     je print_done
 
-    mov [edx], ax
-    add ebx, 1
-    add edx, 2
+;     mov [edx], ax
+;     add ebx, 1
+;     add edx, 2
 
-    jmp print_loop
+;     jmp print_loop
 
-print_done:
-    popa
-    ret
+; print_done:
+;     popa
+;     ret
 
-clear:
-    pusha
-    mov edx, 0xb8000
-    mov ecx, 0
+; clear:
+;     pusha
+;     mov edx, 0xb8000
+;     mov ecx, 0
 
-clear_loop:
-    cmp ecx, 2000
-    je clear_done
+; clear_loop:
+;     cmp ecx, 2000
+;     je clear_done
 
-    mov byte [edx], ' '
-    mov byte [edx + 1], 0x0F
+;     mov byte [edx], ' '
+;     mov byte [edx + 1], 0x0F
 
-    add edx, 2
-    add ecx, 1
+;     add edx, 2
+;     add ecx, 1
 
-    jmp clear_loop
+;     jmp clear_loop
 
-clear_done:
-    popa
-    ret
+; clear_done:
+;     popa
+;     ret
 
-set_cursor:
-    pusha
+; set_cursor:
+;     pusha
 
-    mov bx, 6
+;    mov bx, 6
 
-    mov al, 0x0f
-    mov dx, 0x03d4
-    out dx, al
+;     mov al, 0x0f
+;     mov dx, 0x03d4
+;     out dx, al
 
-    mov al, bl
-    mov dx, 0x03D5
-    out dx, al
+;     mov al, bl
+;     mov dx, 0x03D5
+;     out dx, al
 
-    mov al, 0x0E
-    mov dx, 0x03D4
-    out dx, al
+;     mov al, 0x0E
+;     mov dx, 0x03D4
+;     out dx, al
 
-    mov al, bh
-    mov dx, 0x03D5
-    out dx, al
+;     mov al, bh
+;     mov dx, 0x03D5
+;     out dx, al
 
-    popa
-    ret
+;     popa
+;     ret
 
-TITLE db "ApolOs", 0
+; TITLE db "ApolOs", 0
 
 gdt_start:
 
