@@ -5,11 +5,14 @@ void set_cursor(int col, int row);
 void _start(){
 
     clear_screen();
-    set_cursor(0, 0);
 
     while(1){
 
     }
+}
+
+void print(){
+
 }
 
 void clear_screen(){
@@ -19,6 +22,7 @@ void clear_screen(){
         video_memory[2 * i] = ' ';
         video_memory[2 * i + 1] = 0x0F;
     }
+    set_cursor(0, 0);
 }
 
 static inline void outb(unsigned short port, unsigned char data){
