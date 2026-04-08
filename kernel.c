@@ -1,18 +1,48 @@
 void clear_screen();
 static inline void outb(unsigned short port, unsigned char data); 
 void set_cursor(int col, int row);
+void print(char* text);
 
 void _start(){
 
     clear_screen();
+    print("Welcome to ApolOS\n");
+    print("Track all Nasa missions!\n");
+    print("Are you ready? (y/n): ");
+
 
     while(1){
 
     }
 }
 
-void print(){
+unsigned short cursor_current_row = 0;
+unsigned short cursor_current_col = 0;
 
+void print(char* text){
+    char* video_memory = (char*) 0xb8000;
+
+    for(unsigned long long i = 0; text[i] != '\0'; i++){
+        if(text[i] == '\n'){
+            cursor_current_col = 0;
+            cursor_current_row++;
+        }
+        else{
+            int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
+
+            video_memory[distance] = text[i];
+            video_memory[distance + 1] = 0x0F;
+
+            cursor_current_col++;
+        }
+
+        if(cursor_current_col >= 80){
+            cursor_current_row++;
+            cursor_current_col = 0;
+        }
+    }
+
+    set_cursor(cursor_current_row, cursor_current_col);
 }
 
 void clear_screen(){
@@ -22,6 +52,8 @@ void clear_screen(){
         video_memory[2 * i] = ' ';
         video_memory[2 * i + 1] = 0x0F;
     }
+    cursor_current_col = 0;
+    cursor_current_row = 0;
     set_cursor(0, 0);
 }
 
@@ -34,7 +66,7 @@ static inline void outb(unsigned short port, unsigned char data){
     );
 }
 
-void set_cursor(int col, int row){
+void set_cursor(int row, int col){
 
     unsigned short position = (row * 80 + col);
 
