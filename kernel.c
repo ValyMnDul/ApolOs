@@ -8,8 +8,7 @@ void _start(){
     clear_screen();
     print("Welcome to ApolOS\n");
     print("Track all Nasa missions!\n");
-    print("Are you ready? (y/n): ");
-
+    print("Are you ready? (y/n): \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTest\nfor\nscroll");
 
     while(1){
 
@@ -29,7 +28,7 @@ void print(char* text){
         }
         else{
             int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
-
+            
             video_memory[distance] = text[i];
             video_memory[distance + 1] = 0x0F;
 
@@ -39,6 +38,21 @@ void print(char* text){
         if(cursor_current_col >= 80){
             cursor_current_row++;
             cursor_current_col = 0;
+        }
+
+        if(cursor_current_row >= 25){
+            cursor_current_row = 24;
+
+            for(short r = 0; r <= 23; r++){
+                for(short c = 0; c <= 79; c++){
+                    video_memory[(r * 80 + c) * 2] = video_memory[((r + 1) * 80 + c) * 2];
+                    video_memory[(r * 80 + c) * 2 + 1] = video_memory[((r + 1) * 80 + c) * 2 + 1];
+                }
+            }
+            for(short c = 0; c <= 79; c++){
+                video_memory[(1920 + c) * 2] = ' ';
+                video_memory[(1920 + c) * 2 + 1] = 0x0F;
+            }
         }
     }
 
