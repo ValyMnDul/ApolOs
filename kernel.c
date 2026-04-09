@@ -4,7 +4,8 @@ static inline void outb(unsigned short port, unsigned char data);
 void set_cursor(int col, int row);
 unsigned int strlen(char* string);
 void clear_screen();
-void print(char* string);
+void printChar(char chr);
+void printf(char* format, ...);
 
 // START
 
@@ -16,8 +17,7 @@ void _start(){
     print("Are you ready? (y/n): \n");
     print("\n");
 
-    char lenght = 48 + strlen("test str");
-    print(&lenght);
+    printChar('2');
 
     while(1){
 
@@ -25,6 +25,8 @@ void _start(){
 }
 
 // GLOBALS
+
+char* video_memory = (char*) 0xb8000;
 
 unsigned short cursor_current_row = 0;
 unsigned short cursor_current_col = 0;
@@ -63,6 +65,7 @@ unsigned int strlen(char* string){
 }
 
 void clear_screen(){
+
     char* video_memory = (char*) 0xb8000;
 
     for(int i = 0; i < 2000; i++){
@@ -74,43 +77,50 @@ void clear_screen(){
     set_cursor(0, 0);
 }
 
-void print(char* string){
+void printChar(char chr){
+    
     char* video_memory = (char*) 0xb8000;
 
-    for(unsigned long long i = 0; string[i] != '\0'; i++){
-        if(string[i] == '\n'){
-            cursor_current_col = 0;
-            cursor_current_row++;
-        }
-        else{
-            int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
-            
-            video_memory[distance] = string[i];
-            video_memory[distance + 1] = 0x0F;
+    if(chr == '\n'){
+        cursor_current_col = 0;
+        cursor_current_row++;
+    }
+    else{
+        int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
+        
+        video_memory[distance] = chr;
+        video_memory[distance + 1] = 0x0F;
 
-            cursor_current_col++;
-        }
-
-        if(cursor_current_col >= 80){
-            cursor_current_row++;
-            cursor_current_col = 0;
-        }
-
-        if(cursor_current_row >= 25){
-            cursor_current_row = 24;
-
-            for(short r = 0; r <= 23; r++){
-                for(short c = 0; c <= 79; c++){
-                    video_memory[(r * 80 + c) * 2] = video_memory[((r + 1) * 80 + c) * 2];
-                    video_memory[(r * 80 + c) * 2 + 1] = video_memory[((r + 1) * 80 + c) * 2 + 1];
-                }
-            }
-            for(short c = 0; c <= 79; c++){
-                video_memory[(1920 + c) * 2] = ' ';
-                video_memory[(1920 + c) * 2 + 1] = 0x0F;
-            }
-        }
+        cursor_current_col++;
     }
 
+    if(cursor_current_col >= 80){
+        cursor_current_row++;
+        cursor_current_col = 0;
+    }
+
+    if(cursor_current_row >= 25){
+        cursor_current_row = 24;
+
+        for(short r = 0; r <= 23; r++){
+            for(short c = 0; c <= 79; c++){
+                video_memory[(r * 80 + c) * 2] = video_memory[((r + 1) * 80 + c) * 2];
+                video_memory[(r * 80 + c) * 2 + 1] = video_memory[((r + 1) * 80 + c) * 2 + 1];
+            }
+        }
+        for(short c = 0; c <= 79; c++){
+            video_memory[(1920 + c) * 2] = ' ';
+            video_memory[(1920 + c) * 2 + 1] = 0x0F;
+        }
+    }
     set_cursor(cursor_current_row, cursor_current_col);
+}
+
+void printf(char* format, ...){
+    
+    int* argPtr = (int*)&format + 1;
+
+    for(int i = 0; format[i] != '\0'; i++){
+        
+    }
 }
