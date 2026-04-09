@@ -17,7 +17,7 @@ void _start(){
     printf("Are you ready? (y/n): \n");
     printf("\n");
 
-    printf("Decimal: %d\nCharacter: %c\nString: %s\nModulo: %%\n", 10, '*', "test");
+    printf("Decimal: %d\nCharacter: %c\nString: %s\nModulo: %%\nHex: %x\n", 10, '*', "test", 0xb8000);
 
     while(1){
 
@@ -25,8 +25,6 @@ void _start(){
 }
 
 // GLOBALS
-
-char* video_memory = (char*) 0xb8000;
 
 unsigned short cursor_current_row = 0;
 unsigned short cursor_current_col = 0;
@@ -167,7 +165,36 @@ void printf(char* format, ...){
                 printChar((char)(*argPtr));
                 argPtr++;
             }
-            else if(format[i] = '%'){
+            else if(format[i] == 'x'){
+                unsigned int num = (unsigned int) *argPtr;
+                argPtr++;
+
+                if(num == 0){
+                    printChar('0');
+                }
+                else {
+                    char buffer[16];
+                    int j = 0;
+
+                    while(num != 0){
+                        unsigned int rest = num % 16;
+                        if(rest < 9){
+                            buffer[j] = 48 + rest;
+                        }
+                        else{
+                            buffer[j] = (rest - 10) + 'A';
+                        }
+
+                        num = num /16;
+                        j++;
+                    }
+
+                    for(int k = j - 1; k >= 0; k--){
+                        printChar(buffer[k]);
+                    }
+                }
+            }
+            else if(format[i] == '%'){
                 printChar('%');
             }
         }
