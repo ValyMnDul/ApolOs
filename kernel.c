@@ -12,12 +12,12 @@ void printf(char* format, ...);
 void _start(){
 
     clear_screen();
-    print("Welcome to ApolOS\n");
-    print("Track all Nasa missions!\n");
-    print("Are you ready? (y/n): \n");
-    print("\n");
+    printf("Welcome to ApolOS\n");
+    printf("Track all Nasa missions!\n");
+    printf("Are you ready? (y/n): \n");
+    printf("\n");
 
-    printChar('2');
+    printf("Decimal: %d\nCharacter: %c\nString: %s\nModulo: %%\n", 10, '*', "test");
 
     while(1){
 
@@ -121,6 +121,55 @@ void printf(char* format, ...){
     int* argPtr = (int*)&format + 1;
 
     for(int i = 0; format[i] != '\0'; i++){
-        
+        if(format[i] != '%'){
+            printChar(format[i]);
+        }
+        else {
+            i++;
+
+            if(format[i] == 'd'){
+                int num = *argPtr;
+                argPtr++;
+                
+                if(num == 0){
+                    printChar('0');
+                }
+                else {
+                    if(num < 0){
+                        printChar('-');
+                        num = num * (-1);
+                    }
+
+                    char buffer[16];
+                    int j = 0;
+                    while(num != 0){
+                        short rest = num % 10;
+                        buffer[j] = 48 + rest;
+                        num = num / 10;
+                        j++;
+                    }
+
+                    for(int k = j - 1; k >= 0; k--){
+                        printChar(buffer[k]);
+                    }
+                }
+
+            }
+            else if(format[i] == 's'){
+                char* str = (char*) *argPtr;
+                argPtr++;
+
+                for(int j = 0; str[j] != '\0'; j++){
+                    printChar(str[j]);
+                }
+            } 
+            else if(format[i] == 'c'){
+                printChar((char)(*argPtr));
+                argPtr++;
+            }
+            else if(format[i] = '%'){
+                printChar('%');
+            }
+        }
     }
 }
