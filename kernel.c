@@ -1,11 +1,13 @@
 // DECLARE
 
+static inline unsigned char inb(unsigned short port);
 static inline void outb(unsigned short port, unsigned char data);
 void set_cursor(int col, int row);
 unsigned int strlen(char* string);
 void clear_screen();
 void printChar(char chr);
 void printf(char* format, ...);
+void keyboard_handler();
 
 // START
 
@@ -29,7 +31,31 @@ void _start(){
 unsigned short cursor_current_row = 0;
 unsigned short cursor_current_col = 0;
 
+// STRUCTS
+
+struct idt_entry{
+    unsigned short offset_low;
+    unsigned short selector;
+    unsigned char zero;
+    unsigned char type_attr;
+    unsigned short offset_high;
+} __attribute__ ((packed));
+
+struct idt_ptr{
+    unsigned short limit;
+    unsigned int base;
+} __attribute__ ((packed));
+
+struct idt_entry idt[256];
+struct idt_ptr idtp;
+
 // FUNC
+
+static inline unsigned char inb(unsigned short port) {
+    unsigned char rezultat;
+    __asm__ volatile("inb %1, %0" : "=a"(rezultat) : "Nd"(port));
+    return rezultat;
+}
 
 static inline void outb(unsigned short port, unsigned char data){
     __asm__ volatile(
@@ -199,4 +225,10 @@ void printf(char* format, ...){
             }
         }
     }
+}
+
+void keyboard_handler(){
+    unsigned char scancode = inb(0x60);
+    printf("\n%d", scancode);
+    outb(0x20, 0x20);
 }
