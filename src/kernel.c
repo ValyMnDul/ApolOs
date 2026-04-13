@@ -6,6 +6,7 @@ static inline unsigned char inb(unsigned short port);
 static inline void outb(unsigned short port, unsigned char data);
 void set_cursor(int col, int row);
 unsigned int strlen(char* string);
+int strcmp(const char* str1, const char* str2);
 void clear_screen();
 void printChar(char chr);
 void printf(char* format, ...);
@@ -27,7 +28,8 @@ void _start(){
     printf("Are you ready? (y/n): \n");
     printf("\n");
 
-    printf("Decimal: %d\nCharacter: %c\nString: %s\nModulo: %%\nHex: %x\n", 10, '*', "test", 0xb8000);
+    printf("> ");
+
 
     while(1){
 
@@ -100,6 +102,18 @@ unsigned int strlen(char* string){
         len++;
     }
     return len;
+}
+
+int strcmp(const char* str1, const char* str2){
+    int i = 0;
+    while(str1[i] != '\0' && str2[i] != '\0'){
+        if(str1[i] != str2[i]){
+            return str1[i] - str2[i];
+        }
+
+        i++;
+    }
+    return (str1[i] - str2[i]);
 }
 
 void clear_screen(){
@@ -315,8 +329,10 @@ __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame){
             clearBuffer();
         }
         else if(c == '\b'){
-            printf("\b");
-            keyboardBuffer[--keyboardBufferIndex] = '\0';
+            if(keyboardBufferIndex > 0){
+                keyboardBuffer[--keyboardBufferIndex] = '\0';
+                printf("\b");
+            }
         } else {
             appendToBuffer(c);
             printf("%c", c);
@@ -328,8 +344,10 @@ __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame){
 
 // Buffer
 void appendToBuffer(char c){
-    keyboardBuffer[keyboardBufferIndex++] = c;
-    keyboardBuffer[keyboardBufferIndex] = '\0';
+    if(keyboardBufferIndex < MaxCommandLen - 1){
+        keyboardBuffer[keyboardBufferIndex++] = c;
+        keyboardBuffer[keyboardBufferIndex] = '\0';
+    }
 }
 
 void clearBuffer(){
