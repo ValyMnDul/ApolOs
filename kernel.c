@@ -116,6 +116,18 @@ void printChar(char chr){
         cursor_current_col = 0;
         cursor_current_row++;
     }
+    else if(chr == '\b'){
+        if(cursor_current_col > 0){
+            cursor_current_col--;
+        }
+        else if(cursor_current_row > 0){
+            cursor_current_row--;
+            cursor_current_col = 79;
+        }
+        int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
+        video_memory[distance] = ' ';
+        video_memory[distance + 1] = 0x0F;  
+    }
     else{
         int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
         
