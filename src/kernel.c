@@ -1,5 +1,7 @@
 // DECLARE
 
+#define MaxCommandLen 128
+
 static inline unsigned char inb(unsigned short port);
 static inline void outb(unsigned short port, unsigned char data);
 void set_cursor(int col, int row);
@@ -11,6 +13,8 @@ void idtSetGate(int nr, unsigned int adr);
 void initPic();
 void idtInstall();
 struct interrupt_frame; __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame);
+void appendToBuffer(char c);
+void clearBuffer();
 
 // START
 
@@ -34,6 +38,9 @@ void _start(){
 
 unsigned short cursor_current_row = 0;
 unsigned short cursor_current_col = 0;
+
+char keyboardBuffer[MaxCommandLen];
+short keyboardBufferIndex = 0;
 
 // STRUCTS
 
@@ -301,8 +308,32 @@ __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame){
     unsigned char scancode = inb(0x60);
     
     if(scancode < 128 && QWERTY[scancode] != 0){
-        printf("%c", QWERTY[scancode]);
+        unsigned char c = QWERTY[scancode];
+
+        if(c == '\n'){
+            printf("\n");
+            clearBuffer();
+        }
+        else if(c == '\b'){
+            printf("\b");
+            keyboardBuffer[--keyboardBufferIndex] = '\0';
+        } else {
+            appendToBuffer(c);
+            printf("%c", c);
+        }
     }
     
     outb(0x20, 0x20);
 }
+
+// Buffer
+void appendToBuffer(char c){
+    keyboardBuffer[keyboardBufferIndex++] = c;
+    keyboardBuffer[keyboardBufferIndex] = '\0';
+}
+
+void clearBuffer(){
+    keyboardBufferIndex = 0;
+    keyboardBuffer[0] = '\0';
+}
+
