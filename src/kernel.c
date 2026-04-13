@@ -16,6 +16,7 @@ void idtInstall();
 struct interrupt_frame; __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame);
 void appendToBuffer(char c);
 void clearBuffer();
+void executeCommand(char* command);
 
 // START
 
@@ -326,7 +327,9 @@ __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame){
 
         if(c == '\n'){
             printf("\n");
+            executeCommand(keyboardBuffer);
             clearBuffer();
+            printf("> ");
         }
         else if(c == '\b'){
             if(keyboardBufferIndex > 0){
@@ -342,7 +345,6 @@ __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame){
     outb(0x20, 0x20);
 }
 
-// Buffer
 void appendToBuffer(char c){
     if(keyboardBufferIndex < MaxCommandLen - 1){
         keyboardBuffer[keyboardBufferIndex++] = c;
@@ -355,3 +357,23 @@ void clearBuffer(){
     keyboardBuffer[0] = '\0';
 }
 
+void executeCommand(char* command){
+    if(command[0] == '\0'){
+        return;
+    }
+    else if(strcmp(command, "clear") == 0){
+        clear_screen();
+    }
+    else if(strcmp(command, "info") ==0 ){
+        printf("ApolOS v0.1\n");
+    }
+    else if(strcmp(command, "help") == 0){
+        printf("Available commands:\n");
+        printf("  clear - Clears the screen\n");
+        printf("  help  - Shows this message\n");
+        printf("  info  - Shows OS information\n");
+    }
+    else{
+        printf("Unknown command: %s\n", command);
+    }
+}
