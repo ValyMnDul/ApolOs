@@ -7,13 +7,17 @@ unsigned int strlen(char* string);
 void clear_screen();
 void printChar(char chr);
 void printf(char* format, ...);
-void keyboard_handler();
+void idtSetGate(int nr, unsigned int adr);
+void initPic();
+void idtInstall();
+struct interrupt_frame; __attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame);
 
 // START
 
 void _start(){
 
     clear_screen();
+    idtInstall();
     printf("Welcome to ApolOS\n");
     printf("Track all Nasa missions!\n");
     printf("Are you ready? (y/n): \n");
@@ -32,6 +36,9 @@ unsigned short cursor_current_row = 0;
 unsigned short cursor_current_col = 0;
 
 // STRUCTS
+
+struct interrupt_frame;
+__attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame);
 
 struct idt_entry{
     unsigned short offset_low;
@@ -204,7 +211,7 @@ void printf(char* format, ...){
 
                     while(num != 0){
                         unsigned int rest = num % 16;
-                        if(rest < 9){
+                        if(rest <= 9){
                             buffer[j] = 48 + rest;
                         }
                         else{
@@ -249,9 +256,27 @@ void initPic(){
 
     outb(0x21, 0x0);
     outb(0xA1, 0x0);
+    outb(0x21, 0xFD);
+    outb(0xA1, 0xFF);
 }
 
-void keyboard_handler(){
+void idtInstall(){
+    idtp.limit = (sizeof(struct idt_entry) * 256) - 1;
+    idtp.base = (unsigned int) &idt;
+
+    for (int i = 0; i < 256; i++) {
+        idtSetGate(i, 0);
+    }
+
+    idtSetGate(33, (unsigned int) keyboard_handler);
+
+    initPic();
+
+    __asm__ volatile("lidt %0" : : "m" (idtp));
+    __asm__ volatile("sti");
+}
+
+__attribute__((interrupt)) void keyboard_handler(struct interrupt_frame* frame){
     unsigned char scancode = inb(0x60);
     printf("\n%d", scancode);
     outb(0x20, 0x20);
