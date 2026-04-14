@@ -2,9 +2,11 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "main" ]
+    paths-ignore:
+      - "web/**"
   pull_request:
-    branches: [ "main" ]
+    paths-ignore:
+      - "web/**"
 
 jobs:
   build:

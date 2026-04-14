@@ -372,6 +372,8 @@ void executeCommand(char* command){
         printf("  clear - Clears the screen\n");
         printf("  help  - Shows this message\n");
         printf("  info  - Shows OS information\n");
+    }else if(strcmp(command, "whoami") == 0){
+        printf("root\n");
     }
     else{
         printf("Unknown command: %s\n", command);
