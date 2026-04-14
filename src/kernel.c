@@ -361,18 +361,19 @@ void executeCommand(char* command){
     if(command[0] == '\0'){
         return;
     }
+    else if(strcmp(command, "help") == 0){
+        printf("Available commands:\n");
+        printf("  clear - Clears the screen\n");
+        printf("  help  - Shows this message\n");
+        printf("  info  - Shows OS information\n");
+    }
     else if(strcmp(command, "clear") == 0){
         clear_screen();
     }
     else if(strcmp(command, "info") ==0 ){
         printf("ApolOS v0.1\n");
     }
-    else if(strcmp(command, "help") == 0){
-        printf("Available commands:\n");
-        printf("  clear - Clears the screen\n");
-        printf("  help  - Shows this message\n");
-        printf("  info  - Shows OS information\n");
-    }else if(strcmp(command, "whoami") == 0){
+    else if(strcmp(command, "whoami") == 0){
         printf("root\n");
     }
     else{
