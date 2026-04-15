@@ -17,6 +17,7 @@ struct interrupt_frame; __attribute__((interrupt)) void keyboard_handler(struct 
 void appendToBuffer(char c);
 void clearBuffer();
 void executeCommand(char* command);
+int hexToInt(char* hex);
 
 // START
 
@@ -44,6 +45,8 @@ unsigned short cursor_current_col = 0;
 
 char keyboardBuffer[MaxCommandLen];
 short keyboardBufferIndex = 0;
+
+unsigned char currentColor = 0x0F;
 
 // STRUCTS
 
@@ -123,7 +126,7 @@ void clear_screen(){
 
     for(int i = 0; i < 2000; i++){
         video_memory[2 * i] = ' ';
-        video_memory[2 * i + 1] = 0x0F;
+        video_memory[2 * i + 1] = currentColor;
     }
     cursor_current_col = 0;
     cursor_current_row = 0;
@@ -148,13 +151,13 @@ void printChar(char chr){
         }
         int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
         video_memory[distance] = ' ';
-        video_memory[distance + 1] = 0x0F;  
+        video_memory[distance + 1] = currentColor;  
     }
     else{
         int distance = (cursor_current_row * 80 + cursor_current_col) * 2;
         
         video_memory[distance] = chr;
-        video_memory[distance + 1] = 0x0F;
+        video_memory[distance + 1] = currentColor;
 
         cursor_current_col++;
     }
@@ -175,7 +178,7 @@ void printChar(char chr){
         }
         for(short c = 0; c <= 79; c++){
             video_memory[(1920 + c) * 2] = ' ';
-            video_memory[(1920 + c) * 2 + 1] = 0x0F;
+            video_memory[(1920 + c) * 2 + 1] = currentColor;
         }
     }
     set_cursor(cursor_current_row, cursor_current_col);
@@ -357,6 +360,28 @@ void clearBuffer(){
     keyboardBuffer[0] = '\0';
 }
 
+int hexToInt(char* hex){
+    int val = 0;
+    int i = 0;
+
+    if(hex[0] == '0' && (hex[1] == 'x' || hex[1] == 'X')){
+        i = 2;
+    }
+
+    while(hex[i] != '\0' && hex[i] != ' '){
+        char byte = hex[i];
+
+        if(byte >= '0' && byte <= '9') byte = byte - '0';
+        else if (byte >= 'a' && byte <= 'f') byte = byte - 'a' + 10;
+        else if (byte >= 'A' && byte <= 'F') byte = byte - 'A' + 10;
+        else return -1;
+
+        val = (val << 4) | (byte & 0xF);
+        i++;
+    }
+    return val;
+}
+
 void executeCommand(char* command){
     if(command[0] == '\0'){
         return;
@@ -380,7 +405,7 @@ void executeCommand(char* command){
 
     if(strcmp(command, "help") == 0){
         printf("Available commands:\n");
-        printf("  clear - Clears the screen\n");
+        printf("  clear - Clears the screen\n");    
         printf("  help  - Shows this message\n");
         printf("  info  - Shows OS information\n");
         printf("  whoami - Shows the current user\n");
