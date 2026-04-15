@@ -361,11 +361,30 @@ void executeCommand(char* command){
     if(command[0] == '\0'){
         return;
     }
-    else if(strcmp(command, "help") == 0){
+
+    int i = 0;
+    while (command[i] != ' ' && command[i] != '\0'){
+        i++;
+    }
+
+    char* args = 0x0;
+    
+    if(command[i] == ' '){
+        command[i] = '\0';
+        args = &command[i + 1];
+
+        while (*args == ' '){
+            args++;
+        }
+    }
+
+    if(strcmp(command, "help") == 0){
         printf("Available commands:\n");
         printf("  clear - Clears the screen\n");
         printf("  help  - Shows this message\n");
         printf("  info  - Shows OS information\n");
+        printf("  whoami - Shows the current user\n");
+        printf("  echo [text] - Prints the provided text\n");
     }
     else if(strcmp(command, "clear") == 0){
         clear_screen();
@@ -375,6 +394,14 @@ void executeCommand(char* command){
     }
     else if(strcmp(command, "whoami") == 0){
         printf("root\n");
+    }
+    else if(strcmp(command, "echo") == 0){
+        if(args != 0x0){
+            printf("%s\n", args);
+        }
+        else{
+            printf("\n");
+        }
     }
     else{
         printf("Unknown command: %s\n", command);
