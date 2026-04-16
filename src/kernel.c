@@ -121,6 +121,7 @@ int strcmp(const char* str1, const char* str2){
 }
 
 void clear_screen(){
+    currentColor = 0x0F;
 
     char* video_memory = (char*) 0xb8000;
 
@@ -410,6 +411,7 @@ void executeCommand(char* command){
         printf("  info  - Shows OS information\n");
         printf("  whoami - Shows the current user\n");
         printf("  echo [text] - Prints the provided text\n");
+        printf("  color [hex_code] - Changes text color (e.g., color 0x1E)\n"); 
     }
     else if(strcmp(command, "clear") == 0){
         clear_screen();
@@ -428,7 +430,35 @@ void executeCommand(char* command){
             printf("\n");
         }
     }
+    else if(strcmp(command, "color") == 0){
+        if(args != 0 && args[0] != '\0'){
+            int newColor = hexToInt(args);
+            if(newColor >= 0 && newColor <= 0xFF){
+                currentColor = (unsigned char) newColor;
+            }
+            else {
+                printf("Invalid hex color code.\n");
+            }
+        } 
+        else {
+            printf("Usage: color [hex_code]\n");
+            printf("Format: 0xBG (B=Background, G=Foreground)\n");
+            printf("---------------------------------------\n");
+            printf(" 0 - Black     8 - Dark Gray\n");
+            printf(" 1 - Blue      9 - Light Blue\n");
+            printf(" 2 - Green     A - Light Green\n");
+            printf(" 3 - Cyan      B - Light Cyan\n");
+            printf(" 4 - Red       C - Light Red\n");
+            printf(" 5 - Magenta   D - Light Magenta\n");
+            printf(" 6 - Brown     E - Yellow\n");
+            printf(" 7 - L. Gray   F - White\n");
+            printf("---------------------------------------\n");
+            printf("Example: color 0x0A (Green text on Black bg)\n");
+            printf("         color 0x4F (White text on Red bg)\n");
+        }
+    }
     else{
         printf("Unknown command: %s\n", command);
+
     }
 }
