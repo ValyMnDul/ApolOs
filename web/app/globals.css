@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+
+  --color-text: #141415;
+  --color-background: #f5f5fa;
+  --color-primary: #535cc6;
+  --color-secondary: #8c93ed;
+  --color-accent: #5252eb;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+}
