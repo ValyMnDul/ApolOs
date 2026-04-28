@@ -486,7 +486,31 @@ void executeCommand(char* command){
             printf("  nasa info <mission name>\n");
         }
         else if(strcmp(args, "list") == 0){
-            
+            printf("Current NASA Missions Monitored:\n");
+            for(int j = 0; j < missionCounter; j++){
+                printf(" -%s (%s)\n", nasaDB[j].name, nasaDB[j].status);
+            }
+        }
+        else if(strlen(args) > 5 && args[0] == 'i' && args[1]== 'n' && args[2] == 'f' && args[3] == 'o'){
+            char* missionName = &args[5];
+            short found = 0;
+
+           for(int j = 0; j < missionCounter; j++){
+                if(strcmp(missionName, nasaDB[j].name) == 0){
+                    found = 1;
+                    printf("\n--- Mission Control: %s ---\n", nasaDB[j].name);
+                    printf("Launch Date: %s\n", nasaDB[j].date);
+                    printf("Status     : %s\n", nasaDB[j].status);
+                    printf("Details    : %s\n", nasaDB[j].description);
+                    break;
+                }
+           }
+           if(found == 0){
+            printf("Error: Mission '%s' not found in NASA archives.\n", missionName);
+           }
+        }
+        else {
+            printf("Unknown nasa sub-command: %s\n", args);
         }
     }
     else{
