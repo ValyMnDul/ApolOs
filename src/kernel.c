@@ -69,6 +69,28 @@ struct idt_ptr{
 struct idt_entry idt[256];
 struct idt_ptr idtp;
 
+struct Mission{
+    char* name;
+    char* date;
+    char* objective;
+    char* status; 
+};
+
+struct Mission nasaDB[] = {
+    {"Apollo XI", "1969", "First crewed Moon landing", "Completed"},
+    {"Apollo XIII", "1970", "Lunar landing", "Failure (crew returned safely)"},
+    {"Voyager I", "1977", "Interstellar exploration", "Active"},
+    {"Voyager II", "1977", "Outer planets exploration", "Active"},
+    {"New Horizons", "2006", "Pluto and Kuiper Belt study", "Active"},
+    {"Artemis I", "2022", "Uncrewed flight around the Moon", "Completed"},
+    {"Artemis II", "2026", "First crewed lunar flyby", "Recently completed"},
+    {"Artemis III", "2027+", "Crewed Moon landing", "Planned"},
+    {"MSL", "2011", "Mars surface and climate analysis", "Active"},
+    {"Perseverance", "2020", "Search for signs of ancient life", "Active"},
+    {"Opportunity", "2003", "Mars exploration rover", "Completed"},
+};
+short missionCounter = 11;
+
 // FUNC
 
 static inline unsigned char inb(unsigned short port) {
@@ -455,6 +477,16 @@ void executeCommand(char* command){
             printf("---------------------------------------\n");
             printf("Example: color 0x0A (Green text on Black bg)\n");
             printf("         color 0x4F (White text on Red bg)\n");
+        }
+    }
+    else if(strcmp(command, "nasa") == 0){
+        if(args == 0x0 || args[0] == '\0'){
+            printf("Usage:\n");
+            printf("  nasa list\n");
+            printf("  nasa info <mission name>\n");
+        }
+        else if(strcmp(args, "list") == 0){
+            
         }
     }
     else{
