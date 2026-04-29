@@ -11,7 +11,7 @@ mov sp, bp
 mov bx, 0x1000
 
 mov ah, 0x02
-mov al, 15
+mov al, 60
 mov ch, 0x00
 mov dh, 0x00
 mov cl, 2

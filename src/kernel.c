@@ -73,21 +73,22 @@ struct Mission{
     char* name;
     char* date;
     char* objective;
-    char* status; 
+    char* status;
+    char* description;
 };
 
 struct Mission nasaDB[] = {
-    {"Apollo XI", "1969", "First crewed Moon landing", "Completed"},
-    {"Apollo XIII", "1970", "Lunar landing", "Failure (crew returned safely)"},
-    {"Voyager I", "1977", "Interstellar exploration", "Active"},
-    {"Voyager II", "1977", "Outer planets exploration", "Active"},
-    {"New Horizons", "2006", "Pluto and Kuiper Belt study", "Active"},
-    {"Artemis I", "2022", "Uncrewed flight around the Moon", "Completed"},
-    {"Artemis II", "2026", "First crewed lunar flyby", "Recently completed"},
-    {"Artemis III", "2027+", "Crewed Moon landing", "Planned"},
-    {"MSL", "2011", "Mars surface and climate analysis", "Active"},
-    {"Perseverance", "2020", "Search for signs of ancient life", "Active"},
-    {"Opportunity", "2003", "Mars exploration rover", "Completed"},
+    {"apollo 11", "1969", "First crewed Moon landing", "Completed", "First human mission to land on the Moon. \n Astronauts Neil Armstrong and Buzz Aldrin walked on the lunar surface while Michael Collins remained in orbit."},
+    {"apollo 13", "1970", "Lunar landing", "Failure (crew returned safely)", "Intended lunar landing mission aborted after an in-flight oxygen tank explosion. \n Crew safely returned to Earth in a critical rescue operation."},
+    {"voyager 1", "1977", "Interstellar exploration", "Active", "Deep space probe studying the outer Solar System and now interstellar space. \n It is the farthest human-made object from Earth."},
+    {"voyager 2", "1977", "Outer planets exploration", "Active", "Only spacecraft to visit Uranus and Neptune. \n Continues to transmit scientific data from the outer heliosphere."},
+    {"new Horizons", "2006", "Pluto and Kuiper Belt study", "Active", "First mission to explore Pluto and its moons, \n later continuing into the Kuiper Belt to study distant icy bodies."},
+    {"artemis 1", "2022", "Uncrewed flight around the Moon", "Completed", "First integrated test of NASA’s Artemis program, \n sending the Orion spacecraft around the Moon without crew."},
+    {"artemis 2", "2026", "First crewed lunar flyby", "Recently completed", "Planned crewed mission to orbit the Moon and return, \n testing life-support systems for future lunar landings."},
+    {"artemis 3", "2027+", "Crewed Moon landing", "Planned", "Future mission aiming to land astronauts on the Moon, \n including the first woman and next man on the lunar surface."},
+    {"msl", "2011", "Mars surface and climate analysis", "Active" ,"Mars Science Laboratory mission delivering the Curiosity rover to study Mars’ climate, \n geology, and potential habitability."},
+    {"perseverance", "2020", "Search for signs of ancient life", "Active", "Mars rover searching for signs of ancient microbial \n life and collecting samples for future return to Earth."},
+    {"opportunity", "2003", "Mars exploration rover", "Completed", "Mars rover that operated far beyond its planned mission, \n providing extensive evidence of past water activity on Mars."}
 };
 short missionCounter = 11;
 
@@ -434,6 +435,8 @@ void executeCommand(char* command){
         printf("  whoami - Shows the current user\n");
         printf("  echo [text] - Prints the provided text\n");
         printf("  color [hex_code] - Changes text color (e.g., color 0x1E)\n"); 
+        printf("  nasa list - Shows NASA missions\n");
+        printf("  nasa info [name] - Mission details\n");
     }
     else if(strcmp(command, "clear") == 0){
         clear_screen();
@@ -501,6 +504,7 @@ void executeCommand(char* command){
                     printf("\n--- Mission Control: %s ---\n", nasaDB[j].name);
                     printf("Launch Date: %s\n", nasaDB[j].date);
                     printf("Status     : %s\n", nasaDB[j].status);
+                    printf("Objective  : %s\n", nasaDB[j].objective);
                     printf("Details    : %s\n", nasaDB[j].description);
                     break;
                 }
