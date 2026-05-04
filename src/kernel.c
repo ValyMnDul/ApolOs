@@ -21,6 +21,7 @@ void executeCommand(char* command);
 int hexToInt(char* hex);
 unsigned char read_cmos(unsigned char reg);
 int bcd_to_bin(unsigned char bcd);
+void draw_status_bar();
 
 
 // START
@@ -30,18 +31,20 @@ void _start(){
     clear_screen();
     idtInstall();
     printf("Welcome to ApolOS\n");
-    printf("Track all Nasa missions!\n");
-    printf("Are you ready? (y/n): \n");
-    printf("\n");
-
     printf("> ");
 
+    unsigned char last_sec = 0;
 
     while(1){
+        unsigned char current_sec = read_cmos(0x00);
+        if (current_sec != last_sec) {
+            draw_status_bar();
+            last_sec = current_sec;
+        }
 
+        //__asm__("hlt");
     }
 }
-
 // GLOBALS
 
 unsigned short cursor_current_row = 0;
@@ -162,16 +165,17 @@ void clear_screen(){
 
     char* video_memory = (char*) 0xb8000;
 
-    for(int i = 0; i < 2000; i++){
+    for(int i = 0; i < 1920; i++){
         video_memory[2 * i] = ' ';
         video_memory[2 * i + 1] = currentColor;
     }
     cursor_current_col = 0;
     cursor_current_row = 0;
     set_cursor(0, 0);
+    draw_status_bar();
 }
 
-void statusBar(){
+void draw_status_bar(){
     int sec = bcd_to_bin(read_cmos(0x00));
     int min = bcd_to_bin(read_cmos(0x02));
     int hour = bcd_to_bin(read_cmos(0x04));
@@ -188,6 +192,8 @@ void statusBar(){
         print_at(24, i, " ", 0x70);
     }
 
+    print_at(24, 1, "ApolOS v0.1 | NASA Mission Control", 0x70);
+    print_at(24, 70, clock_str, 0x74);
 }
 
 int print_at(int row, int col, char* str, unsigned char color){
@@ -236,18 +242,18 @@ void printChar(char chr){
         cursor_current_col = 0;
     }
 
-    if(cursor_current_row >= 25){
-        cursor_current_row = 24;
+    if(cursor_current_row >= 24){
+        cursor_current_row = 23;
 
-        for(short r = 0; r <= 23; r++){
+        for(short r = 0; r <= 22; r++){
             for(short c = 0; c <= 79; c++){
                 video_memory[(r * 80 + c) * 2] = video_memory[((r + 1) * 80 + c) * 2];
                 video_memory[(r * 80 + c) * 2 + 1] = video_memory[((r + 1) * 80 + c) * 2 + 1];
             }
         }
         for(short c = 0; c <= 79; c++){
-            video_memory[(1920 + c) * 2] = ' ';
-            video_memory[(1920 + c) * 2 + 1] = currentColor;
+            video_memory[(23 * 80 + c) * 2] = ' ';
+            video_memory[(23 * 80 + c) * 2 + 1] = currentColor;
         }
     }
     set_cursor(cursor_current_row, cursor_current_col);
