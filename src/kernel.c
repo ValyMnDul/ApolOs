@@ -8,6 +8,7 @@ void set_cursor(int col, int row);
 unsigned int strlen(char* string);
 int strcmp(const char* str1, const char* str2);
 void clear_screen();
+int print_at(int row, int col, char* str, unsigned char color);
 void printChar(char chr);
 void printf(char* format, ...);
 void idtSetGate(int nr, unsigned int adr);
@@ -18,6 +19,7 @@ void appendToBuffer(char c);
 void clearBuffer();
 void executeCommand(char* command);
 int hexToInt(char* hex);
+
 
 // START
 
@@ -155,6 +157,18 @@ void clear_screen(){
     cursor_current_col = 0;
     cursor_current_row = 0;
     set_cursor(0, 0);
+}
+
+int print_at(int row, int col, char* str, unsigned char color){
+    char* video_memory = (char*) 0xb8000;
+
+    int offset = (row * 80 + col) * 2;
+
+    for(int i = 0; str[i] != '\0'; i++){
+        video_memory[offset] = str[i];
+        video_memory[offset + 1] = color;
+        offset += 2;
+    }
 }
 
 void printChar(char chr){
