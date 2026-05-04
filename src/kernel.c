@@ -102,6 +102,7 @@ int bcd_to_bin(unsigned char bcd){
     return ((bcd >> 4) * 10) + (bcd & 0x0f);
 }
 
+
 unsigned char read_cmos(unsigned char reg){
     outb(0x70, reg);
     return inb(0x71);
@@ -168,6 +169,25 @@ void clear_screen(){
     cursor_current_col = 0;
     cursor_current_row = 0;
     set_cursor(0, 0);
+}
+
+void statusBar(){
+    int sec = bcd_to_bin(read_cmos(0x00));
+    int min = bcd_to_bin(read_cmos(0x02));
+    int hour = bcd_to_bin(read_cmos(0x04));
+
+    char clock_str[] = "00:00:00";
+    clock_str[0] = (hour / 10) + '0';
+    clock_str[1] = (hour % 10) + '0';
+    clock_str[3] = (min / 10) + '0';
+    clock_str[4] = (min % 10) + '0';
+    clock_str[6] = (sec / 10) + '0';
+    clock_str[7] = (sec % 10) + '0';
+
+    for(int i = 0; i < 80; i++){
+        print_at(24, i, " ", 0x70);
+    }
+
 }
 
 int print_at(int row, int col, char* str, unsigned char color){
