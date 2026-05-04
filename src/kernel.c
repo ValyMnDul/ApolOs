@@ -19,6 +19,8 @@ void appendToBuffer(char c);
 void clearBuffer();
 void executeCommand(char* command);
 int hexToInt(char* hex);
+unsigned char read_cmos(unsigned char reg);
+int bcd_to_bin(unsigned char bcd);
 
 
 // START
@@ -95,6 +97,15 @@ struct Mission nasaDB[] = {
 short missionCounter = 11;
 
 // FUNC
+
+int bcd_to_bin(unsigned char bcd){
+    return ((bcd >> 4) * 10) + (bcd & 0x0f);
+}
+
+unsigned char read_cmos(unsigned char reg){
+    outb(0x70, reg);
+    return inb(0x71);
+}
 
 static inline unsigned char inb(unsigned short port) {
     unsigned char rezultat;
