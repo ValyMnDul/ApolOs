@@ -22,7 +22,18 @@ export default function Home(){
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-        
+        <div className="border border-gray-800 p-4 bg-zinc-950">
+          <h3 className="text-white text-xs font-bold mb-4 uppercase tracking-widest">Map</h3>
+          <ul className="text-[11px] space-y-1">
+            <li className="flex justify-between"><span>0x00007C00</span> <span className="text-gray-500">Bootloader</span></li>
+            <li className="flex justify-between"><span>0x00001000</span> <span className="text-gray-500">Kernel Load</span></li>
+            <li className="flex justify-between"><span>0x00008000</span> <span className="text-gray-500">Stack 16-bit</span></li>
+            <li className="flex justify-between"><span>0x00090000</span> <span className="text-gray-500">Stack 32-bit</span></li>
+          </ul>
+        </div>
+        <div className="border border-gray-800 p-4 bg-zinc-950">
+          
+        </div>
       </div>
     </main>
   )
