@@ -32,7 +32,13 @@ export default function Home(){
           </ul>
         </div>
         <div className="border border-gray-800 p-4 bg-zinc-950">
-          
+          <h3 className="text-white text-xs font-bold mb-4 uppercase tracking-widest">Hardware_Control</h3>
+          <ul className="text-[11px] space-y-1">
+            <li className="flex justify-between"><span>VGA_BUF</span> <span className="text-gray-500">0xb8000</span></li>
+            <li className="flex justify-between"><span>KBD_PORT</span> <span className="text-gray-500">0x60</span></li>
+            <li className="flex justify-between"><span>PIC_MASTER</span> <span className="text-gray-500">0x20</span></li>
+            <li className="flex justify-between"><span>CMOS_REG</span> <span className="text-gray-500">0x70</span></li>
+          </ul>
         </div>
       </div>
     </main>
