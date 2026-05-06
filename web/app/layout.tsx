@@ -1,28 +1,21 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import { Poppins } from 'next/font/google';
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ApolOS",
-  description: "ApolOS Portal",
+  title: "ApolOS v0.1",
+  description: "NASA OS",
 };
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-poppins',
-});
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html
-      lang="en"
-      className={`h-full antialiased bg-background `+ poppins.variable}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body className="bg-black text-gray-300 font-mono antialiased selection:bg-white selection:text-black">
+        {children}
+      </body>
     </html>
   );
 }
