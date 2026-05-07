@@ -41,6 +41,20 @@ export default function Home(){
           </ul>
         </div>
       </div>
+
+      <section className="bg-black border border-gray-800 p-4 font-mono">
+        <div className="text-xs text-gray-600 mb-4 font-bold tracking-tighter uppercase border-b border-gray-900 pb-1">
+          Live_Shell_Preview
+        </div>
+        <div className="text-green-600 text-sm leading-tight">
+          <p>Welcome to ApolOS</p>
+          <p>&gt; nasa info voyager 1</p>
+          <p className="text-white mt-1">--- Mission Control: voyager 1 ---</p>
+          <p className="text-white">Status: Active</p>
+          <p className="text-white">Details: Deep space probe studying the outer Solar System</p>
+          <p>&gt; <span className="inline-block w-2 h-4 bg-green-600 animate-pulse align-middle ml-1"></span></p>
+        </div>
+      </section>
     </main>
   )
 }
