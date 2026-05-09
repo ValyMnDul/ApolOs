@@ -23,6 +23,26 @@ export default function Docs(){
                                     <th className="p-2 text-gray-500 uppercase">Access</th>
                                 </tr>
                             </thead>
+                            <tbody className="divide-y divide-gray-900">
+                                <tr>
+                                    <td className="p-2 text-white">Null Descriptor</td>
+                                    <td className="p-2">0x0</td>
+                                    <td className="p-2">0x0</td>
+                                    <td className="p-2">0x0</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 text-white">Code Segment</td>
+                                    <td className="p-2">0x0</td>
+                                    <td className="p-2">0xFFFFF</td>
+                                    <td className="p-2">10011010b</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-2 text-white">Data Segment</td>
+                                    <td className="p-2">0x0</td>
+                                    <td className="p-2">0xFFFFF</td>
+                                    <td className="p-2">10010010b</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </section>
