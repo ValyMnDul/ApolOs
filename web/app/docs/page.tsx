@@ -46,6 +46,23 @@ export default function Docs(){
                         </table>
                     </div>
                 </section>
+                <section>
+                    <h3 className="text-xs font-bold mb-4 text-gray-500 uppercase">02. CLI_Commands</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {
+                            [
+                                "help - command list",
+                                "info - OS version",
+                                "clear - screen reset",
+                                "whoami - user identity",
+                                "nasa list - DB fetch",
+                                "color [hex] - VGA update",
+                            ].map((cmd) => (
+                                <div key={cmd} className="p-2 border border-gray-900 bg-zinc-950 text-xs font-mono">{cmd}</div>
+                            ))
+                        }
+                    </div>
+                </section>
             </div>
         </main>
     )
