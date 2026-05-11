@@ -59,6 +59,35 @@ export default function Download(){
                     </div>
                 </section>
                 
+                <footer className="grid grid-cols-2 gap-4 border-t border-[#222] pt-6 mt-8">
+                    <div>
+                        <span className="block text-[10px] text-[#555] uppercase font-bold">
+                        Memory_Entry
+                        </span>
+
+                        <span className="text-xs font-mono">
+                        0x00007C00 (MBR)
+                        </span>
+                    </div>
+
+                    <div>
+                        <span className="block text-[10px] text-[#555] uppercase font-bold">
+                        Kernel_Base
+                        </span>
+
+                        <span className="text-xs font-mono">0x00001000</span>
+                    </div>
+
+                    <div>
+                        <span className="block text-[10px] text-[#555] uppercase font-bold">
+                        File_Size
+                        </span>
+
+                        <span className="text-xs font-mono">
+                        ~31 KB (60 Sectors)
+                        </span>gdggdkhhgds
+                    </div>
+                </footer>
             </div>
         </main>
     )
