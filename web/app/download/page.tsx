@@ -3,25 +3,43 @@ import Link from "next/link";
 export default function Download(){
     return (
         <main className="p-6 max-w-4xl mx-auto">
-            <Link href="/" className="text-xs text-gray-500 hover:text-white mb-8 block font-bold tracking-tighter underline">BACK TO HOME</Link>
+            <nav className="mb-12 border-b border-[#222] pb-4">
+                <Link
+                href="/"
+                className="text-[10px] hover:text-white uppercase tracking-widest underline decoration-[#444]"
+                >
+                RET_TO_HOME
+                </Link>
+            </nav>
 
-            <div className="mt-20 border border-gray-800 bg-zinc-950 p-8 flex flex-col items-center">
-                <h2 className="text-white font-bold mb-2 tracking-tighter uppercase">Binary_Distribution</h2>
-                
-                <p className="text-[10px] text-gray-500 mb-8 uppercase tracking-widest text-center">
-                    v0.1-STABLE | MD5: f3a1c...
-                </p>
+            <div className="max-w-3xl mx-auto border border-[#222] p-6 bg-[#050505]">
+                <header className="mb-10">
+                    <h1 className="text-white text-lg font-bold uppercase tracking-tighter mb-1">
+                        Binary Distribution
+                    </h1>
 
-                <div className="w-full max-w-xs space-y-4">
-                    <button className="w-full bg-white text-black py-2 font-bold text-xs hover:bg-gray-200 transition-colors">
-                        GET APOLOS.ISO
-                    </button>
-                    <div className="text-[10px] text-gray-400 font-mono bg-black p-3 border border-gray-800 break-all">
-                        $ nasm -f bin boot.asm -o boot.bin<br/>
-                        $ i686-elf-gcc -ffreestanding -c kernel.c<br/>
-                        $ ld -o kernel.bin -Ttext 0x1000 kernel.o --oformat binary
-                    </div>
+                    <p className="text-[10px] text-[#555] uppercase">
+                        Architecture: x86_32 | Format: Flat Binary | Target:
+                        i386-compatible
+                    </p>
+                </header>
+
+                <section className="mb-12">
+                <div className="bg-[#111] border border-[#222] p-8 text-center">
+                    <p className="text-xs mb-6 text-gray-400 uppercase tracking-widest">
+                    Ready for hardware or emulation
+                    </p>
+
+                    <a
+                    href="/apolos.bin"
+                    download="apolos.bin"
+                    className="inline-block bg-[#eeeeee] text-black px-10 py-3 text-xs font-bold hover:bg-white transition-none uppercase tracking-tighter"
+                    >
+                    Get apolos.bin
+                    </a>
                 </div>
+                </section>
+
             </div>
         </main>
     )

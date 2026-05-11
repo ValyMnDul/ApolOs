@@ -11,13 +11,17 @@ export default function Home(){
         <nav className="flex gap-6 text-sm">
           <Link href="/docs" className="hover:text-white border-b border-gray-700">DOCS</Link>
           <Link href="/download" className="hover:text-white border-b border-gray-700">BIN</Link>
-          <a href="#" className="hover:text-white border-b border-gray-700">SOURCE</a>
         </nav>
       </header>
 
-      <section className="mb-12">
-        <p className="text-base leading-relaxed mb-6">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam exercitationem sapiente porro voluptatem atque esse debitis provident? Odit atque optio quod itaque repellat ad fugiat beatae obcaecati voluptates. Perferendis, mollitia.
+      <section className="mb-12 border-l-2 border-white pl-6">
+        <p className="text-base leading-relaxed text-gray-400">
+          <span className="text-white font-bold tracking-tight">ApolOS is an operating system</span> built from the ground up to explore the fundamentals of x86 architecture. 
+          It orchestrates a precise transition from 16-bit Real Mode to 32-bit Protected Mode, manually mapping the Global Descriptor Table (GDT) and establishing a custom execution environment at memory address <span className="text-white font-mono text-[13px]">0x1000</span>.
+        </p>
+        <p className="text-base leading-relaxed text-gray-400 mt-4">
+          Developed in a hybrid of Assembly and C, the kernel manages low-level hardware interfaces, including direct VGA buffer manipulation and an Interrupt Descriptor Table (IDT) for real-time input handling. 
+          The system features a dedicated command-line interface designed for monitoring deep-space NASA missions and real-time CMOS telemetry.
         </p>
       </section>
 
@@ -44,7 +48,7 @@ export default function Home(){
 
       <section className="bg-black border border-gray-800 p-4 font-mono">
         <div className="text-xs text-gray-600 mb-4 font-bold tracking-tighter uppercase border-b border-gray-900 pb-1">
-          Live_Shell_Preview
+          Shell Preview
         </div>
         <div className="text-green-600 text-sm leading-tight">
           <p>Welcome to ApolOS</p>
