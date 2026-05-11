@@ -40,6 +40,25 @@ export default function Download(){
                 </div>
                 </section>
 
+                <section className="mb-12">
+                    <h2 className="text-white text-xs font-bold uppercase mb-4 border-l-2 border-white pl-2">
+                        Quick_Start (Ubuntu / Debian)
+                    </h2>
+
+                    <p className="text-xs mb-4 leading-relaxed">
+                        The following command updates repositories, installs the QEMU
+                        emulator, and executes the ApolOS binary in a raw drive
+                        environment:
+                    </p>
+
+                    <div className="bg-black border border-[#333] p-4 font-mono text-[11px] relative">
+                        <code className="text-[#00ff41] leading-relaxed break-all">
+                        sudo apt update && sudo apt install -y qemu-system-x86 &&
+                        qemu-system-i386 -drive format=raw,file=apolos.bin
+                        </code>
+                    </div>
+                </section>
+                
             </div>
         </main>
     )
