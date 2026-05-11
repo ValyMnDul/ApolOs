@@ -85,7 +85,15 @@ export default function Download(){
 
                         <span className="text-xs font-mono">
                         ~31 KB (60 Sectors)
-                        </span>gdggdkhhgds
+                        </span>
+                    </div>
+
+                    <div>
+                        <span className="block text-[10px] text-[#555] uppercase font-bold">
+                        Permissions
+                        </span>
+
+                        <span className="text-xs font-mono">Level_0 (Root)</span>
                     </div>
                 </footer>
             </div>
