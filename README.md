@@ -20,7 +20,7 @@ A 32-bit x86 operating system designed for NASA mission monitoring.
 To test ApolOS, ensure QEMU and `apolos.bin` are installed. Execute the following command in your terminal (debian command):
 
 ```bash
-sudo apt update && sudo apt install -y qemu-system-x86 && qemu-system-i386 -drive format=raw,file=apolos.bin
+sudo apt install -y qemu-system-x86 && qemu-system-i386 -drive format=raw,file=apolos.bin
 ```
 
 ## CLI Reference

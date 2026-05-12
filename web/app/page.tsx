@@ -19,6 +19,21 @@ export default function Home(){
           <span className="text-white font-bold tracking-tight">ApolOS is an operating system</span> built from the ground up to explore the fundamentals of x86 architecture. 
           It orchestrates a precise transition from 16-bit Real Mode to 32-bit Protected Mode, manually mapping the Global Descriptor Table (GDT) and establishing a custom execution environment at memory address <span className="text-white font-mono text-[13px]">0x1000</span>.
         </p>
+        <div className="mt-6 flex gap-4">
+        <Link
+            href="/download"
+            className="bg-white text-black px-5 py-2 text-xs font-bold uppercase tracking-widest hover:bg-gray-300 transition"
+          >
+            Download
+          </Link>
+
+          <Link
+            href="/docs"
+            className="border border-gray-700 px-5 py-2 text-xs font-bold uppercase tracking-widest hover:border-white hover:text-white transition"
+          >
+            Documentation
+          </Link>
+        </div>
         <p className="text-base leading-relaxed text-gray-400 mt-4">
           Developed in a hybrid of Assembly and C, the kernel manages low-level hardware interfaces, including direct VGA buffer manipulation and an Interrupt Descriptor Table (IDT) for real-time input handling. 
           The system features a dedicated command-line interface designed for monitoring deep-space NASA missions and real-time CMOS telemetry.

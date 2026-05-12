@@ -46,15 +46,14 @@ export default function Download(){
                     </h2>
 
                     <p className="text-xs mb-4 leading-relaxed">
-                        The following command updates repositories, installs the QEMU
+                        The following command installs the QEMU
                         emulator, and executes the ApolOS binary in a raw drive
                         environment:
                     </p>
 
                     <div className="bg-black border border-[#333] p-4 font-mono text-[11px] relative">
                         <code className="text-[#00ff41] leading-relaxed break-all">
-                        sudo apt update && sudo apt install -y qemu-system-x86 &&
-                        qemu-system-i386 -drive format=raw,file=apolos.bin
+                        sudo apt install -y qemu-system-x86 && qemu-system-i386 -drive format=raw,file=apolos.bin
                         </code>
                     </div>
                 </section>
