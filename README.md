@@ -8,7 +8,7 @@ ApolOS is a monolithic kernel developed in Assembly and C. It executes a precise
 
 ## Interface
 
-![ApolOS Terminal Interface](demo.png)
+![ApolOS Terminal Interface](/web/public/demo.png)
 
 ## Technical Specifications
 
