@@ -30,8 +30,17 @@ void _start(){
 
     clear_screen();
     idtInstall();
-    printf("Welcome to ApolOS\n");
-    printf("> ");
+
+
+    printf("                   ___                _  ____   ____  \n");
+    printf("                  / _ \\              | |/ __ \\ / ____| \n");
+    printf("                 | |_| | _ __   ___  | | |  | | (___   \n");
+    printf("                 |  _  || '_ \\ / _ \\ | | |  | |\\___ \\  \n");
+    printf("                 | | | || |_) | (_) || | |__| |____) | \n");
+    printf("                 |_| |_|| .__/ \\___/ |_|\\____/|_____/  \n");
+    printf("                        | |                            \n");
+    printf("                        |_|     MISSION CONTROL SYSTEM \n\n");
+    printf("CLI > ");
 
     unsigned char last_sec = 0;
 
@@ -479,15 +488,20 @@ void executeCommand(char* command){
     }
 
     if(strcmp(command, "help") == 0){
-        printf("Available commands:\n");
-        printf("  clear - Clears the screen\n");    
-        printf("  help  - Shows this message\n");
-        printf("  info  - Shows OS information\n");
-        printf("  whoami - Shows the current user\n");
-        printf("  echo [text] - Prints the provided text\n");
-        printf("  color [hex_code] - Changes text color (e.g., color 0x1E)\n"); 
-        printf("  nasa list - Shows NASA missions\n");
-        printf("  nasa info [name] - Mission details\n");
+        printf("__________________________________________________________________\n");
+        printf(" ApolOS v0.1 | NASA COMMAND TERMINAL - HELP MENU\n");
+        printf("__________________________________________________________________\n\n");
+        
+        printf("  SYSTEM COMMANDS:\n");
+        printf("  - clear          : Reset video buffer and cursor\n");
+        printf("  - info           : Display kernel version and build\n");
+        printf("  - whoami         : Display current user permissions\n");
+        printf("  - echo [text]    : Output string to terminal\n");
+        printf("  - color [hex]    : Change VGA attributes (ex: color 0x0A)\n\n");
+
+        printf("  NASA MISSION CONTROL:\n");
+        printf("  - nasa list      : List all monitored space missions\n");
+        printf("  - nasa info [id] : Retrieve detailed telemetry and logs\n");
     }
     else if(strcmp(command, "clear") == 0){
         clear_screen();
