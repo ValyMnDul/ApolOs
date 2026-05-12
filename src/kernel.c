@@ -507,7 +507,14 @@ void executeCommand(char* command){
         clear_screen();
     }
     else if(strcmp(command, "info") ==0 ){
-        printf("ApolOS v0.1\n");
+        printf("\n[ SYSTEM SPECIFICATIONS ]\n");
+        printf("OS NAME    : ApolOS (Apollo Operating System)\n");
+        printf("VERSION    : 0.1\n");
+        printf("ARCH       : x86_32 (Protected Mode)\n");
+        printf("KERNEL ADDR: 0x1000\n");
+        printf("VGA MODE   : 80x25 Text\n");
+        printf("STATUS     : Nominal\n\n");
+
     }
     else if(strcmp(command, "whoami") == 0){
         printf("root\n");
@@ -549,41 +556,37 @@ void executeCommand(char* command){
     }
     else if(strcmp(command, "nasa") == 0){
         if(args == 0x0 || args[0] == '\0'){
-            printf("Usage:\n");
-            printf("  nasa list\n");
-            printf("  nasa info <mission name>\n");
+            printf("\nUSAGE: nasa <list|info> [mission_name]\n");
         }
         else if(strcmp(args, "list") == 0){
-            printf("Current NASA Missions Monitored:\n");
+            printf("\nSTREAMS FROM NASA_DB.BIN:\n");
+            printf("------------------------------------------\n");
             for(int j = 0; j < missionCounter; j++){
-                printf(" -%s (%s)\n", nasaDB[j].name, nasaDB[j].status);
+                printf(" [%d] %s \t >> STATUS: %s\n", j+1, nasaDB[j].name, nasaDB[j].status);
             }
+            printf("------------------------------------------\n\n");
         }
         else if(strlen(args) > 5 && args[0] == 'i' && args[1]== 'n' && args[2] == 'f' && args[3] == 'o'){
             char* missionName = &args[5];
             short found = 0;
-
-           for(int j = 0; j < missionCounter; j++){
+            for(int j = 0; j < missionCounter; j++){
                 if(strcmp(missionName, nasaDB[j].name) == 0){
                     found = 1;
-                    printf("\n--- Mission Control: %s ---\n", nasaDB[j].name);
-                    printf("Launch Date: %s\n", nasaDB[j].date);
-                    printf("Status     : %s\n", nasaDB[j].status);
-                    printf("Objective  : %s\n", nasaDB[j].objective);
-                    printf("Details    : %s\n", nasaDB[j].description);
+                    printf("\n>>> DECRYPTING TELEMETRY FOR: %s\n", nasaDB[j].name);
+                    printf("================================================\n");
+                    printf(" DATE     : %s\n", nasaDB[j].date);
+                    printf(" STATUS   : %s\n", nasaDB[j].status);
+                    printf(" OBJECTIVE: %s\n", nasaDB[j].objective);
+                    printf(" LOGS     : %s\n", nasaDB[j].description);
+                    printf("================================================\n\n");
                     break;
                 }
-           }
-           if(found == 0){
-            printf("Error: Mission '%s' not found in NASA archives.\n", missionName);
-           }
-        }
-        else {
-            printf("Unknown nasa sub-command: %s\n", args);
+            }
+            if(!found) printf("\n[!] ERROR: Mission '%s' not in database.\n\n", missionName);
         }
     }
     else{
-        printf("Unknown command: %s\n", command);
+        printf("[?] COMMAND NOT RECOGNIZED: %s\n", command);
 
     }
 }
