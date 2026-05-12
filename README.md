@@ -2,10 +2,6 @@
 
 A 32-bit x86 operating system designed for NASA mission monitoring.
 
-## Overview
-
-ApolOS is a monolithic kernel developed in Assembly and C. It executes a precise transition from 16-bit Real Mode to 32-bit Protected Mode, providing a low-level environment for hardware interaction and mission data retrieval.
-
 ## Interface
 
 ![ApolOS Terminal Interface](/web/public/demo.png)
